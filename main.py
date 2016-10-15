@@ -85,12 +85,9 @@ class KivyDynamicLoadingTemplate(App, WidgetInterface, AppJsonStorage):
     def on_start(self):
         '''Configures app when it starts.'''
         self.use_kivy_settings = False
-        from kivy.base import EventLoop#, runTouchApp
+        from kivy.base import EventLoop, runTouchApp
         EventLoop.window.bind(on_keyboard=self.hook_keyboard)
 
-    
-    def on_start(self):
-        pass
 
     def on_pause(self):
         # Here you can save data if needed
@@ -109,7 +106,8 @@ class KivyDynamicLoadingTemplate(App, WidgetInterface, AppJsonStorage):
         hooks back button (esc on desktop) to prevent auto close
         '''
         screens_to_ignore = ['screen_post_splash', 'screen_start', 'screen_menu']
-
+        screens_with_key_back_handler = ['screen_webview']
+        print self.root.current
         if key == 27:
             ''' on key back (escape) '''
             if self.root.transition.is_active:
@@ -122,9 +120,8 @@ class KivyDynamicLoadingTemplate(App, WidgetInterface, AppJsonStorage):
                 elif self.root.current == 'screen_which_should_back_to_menu':
                     ''' if current screen is any of the speciied, then show screen_start '''
                     self.root.switch_screen('slide', 'screen_menu', clear=True)
-                # elif self.root.current == 'screen_with_webview':
-                #     self.get_widget('screen_with_webview').key_back_handler()
-                    
+                elif self.root.current in screens_with_key_back_handler:
+                    self.root.get_screen(self.root.current).key_back_handler()                    
                 else:
                     ''' if other screen then switch to last_screen remembered '''
                     self.root.switch_screen()

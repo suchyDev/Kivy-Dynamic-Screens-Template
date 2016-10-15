@@ -14,6 +14,8 @@ menuscreen_kv = '''
             #on_release: text_input_field.save_text()
             # this is great for registered widgets accessible globally:
             on_release: app.get_widget('text_input_field_global_id').save_text()
+        ButtonLaunchWebView:
+            text: 'WebView'
         Button:
             text: 'Quit'
             on_release: screen_menu.leave()
@@ -21,6 +23,7 @@ menuscreen_kv = '''
 
 from kivy.app import App
 from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
 
 from generic import DynamicScreen
 from generic import SelfRegister
@@ -53,4 +56,12 @@ class InputField(TextInput, SelfRegister):
     def save_text(self, *args):
         app =  App.get_running_app()
         app.store.put('stored_text_section', stored_text=app.encrypt(self.text))
-        
+
+
+class ButtonLaunchWebView(Button):
+    def on_release(self, *args):
+        screen_manager = App.get_running_app().root
+        if not screen_manager.has_screen('screen_webview'):
+            from screens.screenwebview import ScreenWebView
+            screen_manager.add_widget(ScreenWebView())
+        screen_manager.switch_screen('slide', 'screen_webview')

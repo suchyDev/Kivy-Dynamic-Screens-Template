@@ -36,7 +36,7 @@ version.filename = %(source.dir)s/main.py
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
-requirements = kivy=='master',pycrypto
+requirements = kivy=='master',pycrypto,pyjnius
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -72,8 +72,8 @@ orientation = all
 fullscreen = 0
 
 # (list) Permissions
-#android.permissions = INTERNET
 #android.permissions = WAKE_LOCK
+android.permissions = INTERNET
 
 # (int) Android API to use
 #android.api = 19
@@ -82,7 +82,7 @@ fullscreen = 0
 android.minapi = 14
 
 # (int) Android SDK version to use
-#android.sdk = 20
+android.sdk = 21
 
 # (str) Android NDK version to use
 #android.ndk = 9c
